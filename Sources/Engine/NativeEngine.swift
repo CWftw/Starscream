@@ -93,4 +93,10 @@ public class NativeEngine: NSObject, Engine, URLSessionDataDelegate, URLSessionW
         }
         broadcast(event: .disconnected(r, UInt16(closeCode.rawValue)))
     }
+	
+	public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+	   //Trust the certificate even if not valid
+	   let urlCredential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+	   completionHandler(.useCredential, urlCredential)
+	}
 }
